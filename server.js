@@ -1,0 +1,58 @@
+const express = require("express");
+const stripe = require("stripe");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+const app = express();
+
+app.use(express.static("public"));
+app.use(express.json());
+
+app.get("/", (req, res) => {
+    res.sendFile("index.html", { root : "public"});
+});
+
+app.get("/success", (req, res) => {
+    res.sendFile("success.html", { root : "public"});
+});
+
+app.get("/cancel", (req, res) => {
+    res.sendFile("cancel.html", { root : "public"});
+});
+
+const stripeGateway = stripe(process.env.stripe_api);
+const DOMAIN = process.env.DOMAIN;
+
+app.post("/stripe-checkout", async(req, res) => {
+    const lineItems = req.body.items.map((item) => {
+        const unitAmount = parseInt(item.price.replace(/[^0-9.-]+/g, "") *100);
+        return {
+            price_data : {
+                currency : "usd",
+                product_data : {
+                    name : item.title,
+                    images : [item.productImg]
+                },
+                unit_amount : unitAmount,
+            },
+            
+            quantity : item.quantity,
+        };
+    });
+    const session = await stripeGateway.checkout.sessions.create({
+        payment_method_types : ["card"],
+        mode : "payment",
+        success_url : `${DOMAIN}/success`,
+        cancel_url : `${DOMAIN}/cancel`,
+        line_items : lineItems,
+        billing_address_collection : "required",
+    });
+    res.json(session.url);
+});
+
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+})

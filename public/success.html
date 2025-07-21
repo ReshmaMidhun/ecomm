@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Successful Payment</title>
+    <!--Link to CSS-->
+    <link rel="stylesheet" href="CSS/style.css">
+
+</head>
+<body>
+    <div class="sc-container">
+        <h1>Payment Successful</h1>
+        <p>Your Order will arrive in 2 business Days</p>
+        <img src="img/success.png" alt="">
+        <a href="http://localhost:3000/" class="sc-btn">Back To Home Page</a>
+    </div>
+   <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get("session_id");
+
+        if (sessionId) {
+            // Valid session, now clear cart
+            localStorage.removeItem("cartItems");
+        } else {
+            console.log("No valid session_id. Not clearing cart.");
+        }
+    </script>
+
+
+</body>
+</html>
