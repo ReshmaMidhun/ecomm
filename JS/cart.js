@@ -10,6 +10,10 @@ payBtn.addEventListener("click", () => {
         }),
     })
     .then((res) => res.json())
-    .then((url) => location.href = url)
+    .then((url) => {
+
+     location.href = url;
+     clearCart(); 
+    })
     .catch((err) => console.log(err))
 });

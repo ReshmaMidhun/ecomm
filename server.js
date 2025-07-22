@@ -1,24 +1,28 @@
 const express = require("express");
 const stripe = require("stripe");
 const dotenv = require("dotenv");
+const path = require("path");
 
 dotenv.config();
 
 const app = express();
 
-app.use(express.static("public"));
+app.use(express.static(__dirname));
 app.use(express.json());
 
+
+
 app.get("/", (req, res) => {
-    res.sendFile("index.html", { root : "public"});
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
+
 app.get("/success", (req, res) => {
-    res.sendFile("success.html", { root : "public"});
+    res.sendFile(path.join(__dirname, "success.html"));
 });
 
 app.get("/cancel", (req, res) => {
-    res.sendFile("cancel.html", { root : "public"});
+    res.sendFile(path.join(__dirname, "cancel.html"));
 });
 
 const stripeGateway = stripe(process.env.stripe_api);
