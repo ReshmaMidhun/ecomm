@@ -94,6 +94,8 @@ function addProductToCart(productImg, title, price) {
                          name="" 
                          id="" 
                          value="1"
+                         min="1"
+                         step="1"
                          class="cart-quantity"
                          />
                     </div>
