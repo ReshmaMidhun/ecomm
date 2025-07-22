@@ -41,7 +41,7 @@ const DOMAIN = process.env.DOMAIN;
 
 
 // ✅ Stripe checkout endpoint
-app.post("https://ecomm-ab86.onrender.com/stripe-checkout", async(req, res) => {
+app.post("/stripe-checkout", async(req, res) => {
     const lineItems = req.body.items.map((item) => {
         const unitAmount = parseInt(item.price.replace(/[^0-9.-]+/g, "") *100);
         return {
