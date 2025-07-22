@@ -1,7 +1,7 @@
 const payBtn = document.querySelector(".btn-buy");
 
 payBtn.addEventListener("click", () => {
-    fetch("/stripe-checkout", {
+    fetch("https://ecomm-ab86.onrender.com/stripe-checkout", {
         method : "post",
         headers :
         new Headers({ "Content-Type" : "application/json" }),

@@ -2,6 +2,13 @@ const express = require("express");
 const stripe = require("stripe");
 const dotenv = require("dotenv");
 const path = require("path");
+const cors = require("cors");
+app.use(cors({
+    origin: "https://reshmamidhun.github.io/ecomm/", // GitHub Pages domain
+    methods: ["POST", "GET"],
+    credentials: false
+}));
+
 
 dotenv.config();
 
@@ -28,7 +35,9 @@ app.get("/cancel", (req, res) => {
 const stripeGateway = stripe(process.env.stripe_api);
 const DOMAIN = process.env.DOMAIN;
 
-app.post("/stripe-checkout", async(req, res) => {
+
+
+app.post("https://ecomm-ab86.onrender.com/stripe-checkout", async(req, res) => {
     const lineItems = req.body.items.map((item) => {
         const unitAmount = parseInt(item.price.replace(/[^0-9.-]+/g, "") *100);
         return {
