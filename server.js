@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 const path = require("path");
 const cors = require("cors");
 app.use(cors({
-    origin: "https://reshmamidhun.github.io/ecomm/", // GitHub Pages domain
+    origin: "https://reshmamidhun.github.io", // GitHub Pages domain
     methods: ["POST", "GET"],
     credentials: false
 }));
